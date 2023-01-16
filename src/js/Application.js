@@ -1,4 +1,5 @@
 import EventEmitter from "eventemitter3";
+import Beat from "./Beat";
 
 export default class Application extends EventEmitter {
   static get events() {
@@ -10,11 +11,27 @@ export default class Application extends EventEmitter {
   constructor() {
     super();
 
-    const button = document.querySelector(".button");
-    button.addEventListener("click", () => {
-      alert("💣");
-    });
+
+
+    this._beat = new Beat();
+    this._create();
 
     this.emit(Application.events.READY);
+  }
+
+  _create() {
+    const lyrics = ['Ah', 'ha', 'ha', 'ha', 'stain alive', 'stain alive'];
+    let count = 0;
+    this._beat.on(Beat.events.BIT, (bit) => {
+      const message = document.createElement('div');
+      message.classList.add('message');
+      message.textContent = lyrics[count];
+      count++; 
+
+      if (count == 6) {
+        count = 0;
+      }
+      document.querySelector('.main').appendChild(message);
+    })
   }
 }
