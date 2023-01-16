@@ -22,7 +22,7 @@ export default class Application extends EventEmitter {
   _create() {
     const lyrics = ['Ah', 'ha', 'ha', 'ha', 'stayin alive', 'stayin alive'];
     let count = 0;
-    this._beat.on(Beat.events.BIT, (bit) => {
+    this._beat.addListener(Beat.events.BIT, (bit) => {
       const message = document.createElement('div');
       message.classList.add('message');
       message.textContent = lyrics[count];
